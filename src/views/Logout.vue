@@ -1,19 +1,12 @@
-<script>
-    import firebase from 'firebase';
+<template>
+    <div>Logged out</div>
+</template>
 
+<script>
     export default {
-        name: "logout",
-        created: function() {
-            firebase.auth().signOut().then(() => {
-                this.$router.replace('login');
-            })
-        },
-        methods: {
-            logout: function() {
-                firebase.auth().signOut().then(() => {
-                    this.$router.replace('login');
-                })
-            }
+        async mounted () {
+            await this.$auth.logout()
+            this.$router.replace({name: 'home'})
         }
     }
 </script>
