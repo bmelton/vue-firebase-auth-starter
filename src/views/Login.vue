@@ -4,6 +4,10 @@
         <input type="text" placeholder="email" /><br />
         <input type="password" placeholder="password" /><br />
         <button>Log In</button>
+        <p>
+            <router-link to="/register">Sign up</router-link> to create a new account
+            instead.
+        </p>
     </div>
 </template>
 
