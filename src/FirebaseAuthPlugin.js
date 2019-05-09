@@ -28,8 +28,7 @@ export default {
       store.commit('updateUser',{ user })
 
       let display = 'Not set';
-      // Should probably try toggling on provider data.
-      console.log(user.providerData);
+
 
       if(user.displayName !== null) {
         display = user.displayName;

@@ -1,8 +1,8 @@
 <template>
     <div class="login">
         <h3>Sign In</h3>
-        <input v-mode="email" type="text" placeholder="email" /><br />
-        <input v-mode="password" type="password" placeholder="password" /><br />
+        <input v-model="email" type="text" placeholder="email" /><br />
+        <input v-model="password" type="password" placeholder="password" /><br />
         <button @click="login">Log In</button>
         <p>
             <img @click="loginTwitter" alt="Twitter login button" src="../assets/social/twitter-64px.png" />
@@ -61,6 +61,7 @@
                     },
                     function(err) {
                         alert("Login details invalid.");
+                        console.log(err);
                     }
                 )
             }
