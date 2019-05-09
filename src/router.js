@@ -6,6 +6,7 @@ import Login from './views/Login.vue'
 import Logout from './views/Logout.vue'
 import Register from './views/Register.vue'
 import Dashboard from './views/Dashboard.vue'
+import store from './store';
 
 Vue.use(Router)
 
@@ -36,12 +37,18 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  const currentUser = firebase.auth().currentUser;
-  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-
-  console.log(currentUser);
-  console.log(requiresAuth);
-  next();
-});
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!store.state.user) {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
 
 export default router;

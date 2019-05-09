@@ -5,6 +5,9 @@
         <input v-mode="password" type="password" placeholder="password" /><br />
         <button @click="login">Log In</button>
         <p>
+            <img @click="loginTwitter" alt="Twitter login button" src="../assets/social/twitter-64px.png" />
+        </p>
+        <p>
             <router-link to="/register">Sign up</router-link> to create a new account
             instead.
         </p>
@@ -13,21 +16,47 @@
 
 <script>
     import firebase from 'firebase';
+    import {mapGetters} from 'vuex';
 
     export default {
         name: 'login',
+            computed: {
+                ...mapGetters(['user']),
+                nextRoute () {
+                return this.$route.query.redirect || '/'
+            }
+        },
         data() {
             return {
-                email: 'barry.melton@gmail.com',
-                password: '101proof'
+                email: '',
+                password: ''
             };
         },
+        watch: {
+            user(auth) {
+                if(!!auth) {
+                    this.$router.replace(this.nextRoute);
+                }
+            }
+        },
         methods: {
+            /*
+            async login () {
+                const auth = await this.$auth.signInWithEmailAndPassword(this.email, this.password)
+            },
+            */
+            loginTwitter: function() {
+                const provider = new firebase.auth.TwitterAuthProvider();
+                firebase.auth().signInWithPopup(provider)
+                .then((result) => {
+                    this.$router.replace('home');
+                }).catch((err) => {
+                    alert(err.message);
+                })
+            },
             login: function() {
-                firebase.auth().signInWithEmailAndPassword(
-                    this.email, this.password
-                ).then(
-                    function(user) {
+                firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+                .then(function(user) {
                         alert("Successful authentication!");
                     },
                     function(err) {

@@ -3,13 +3,24 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> | 
-      <router-link to="/dashboard">Dashboard</router-link> | 
-      <router-link to="/login">Log in</router-link> | 
-      <router-link to="/logout">Log out</router-link>
+      <span v-show="!user"><router-link to="/login">Log in</router-link> | </span>
+      <span v-show="user"><router-link to="/dashboard">Dashboard</router-link> | </span>
+      <span v-show="user">
+         <router-link to="/logout">Log out {{ $store.state.displayName }}</router-link>
+      </span>
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+  import { mapState } from 'vuex';
+  export default { 
+    computed: {
+      ...mapState(['user'])
+    }
+  }
+</script>
 
 <style>
 #app {
