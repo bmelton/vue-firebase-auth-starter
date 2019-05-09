@@ -1,6 +1,3 @@
-<template>
-</template>
-
 <script>
     import firebase from 'firebase';
 
